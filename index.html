@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Test REST API</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Podcast</h2>
+        <div class="list-group">
+        </div>
+    </div>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        var uri = 'https://api.audioboom.com/channels/3245107/audio_clips.json?tag=FrontPage';
+
+        $(document).ready(function () {
+
+            $.ajax({
+                beforeSend: function (request) {
+                    request.setRequestHeader("Accept", 'application/json; version=1');
+                },
+                dataType: "json",
+                url: uri,
+                success: function (data) {
+                    $.each(data.body.audio_clips, function (key, value) {
+                        //append value to div
+                        $(".list-group").prepend("<a href=\"single.html?id=" + value.id  + "\" class=\"list-group-item\">" + value.title + "</a>");
+
+                    });
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>
